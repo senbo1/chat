@@ -12,19 +12,22 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@chat/schema": "workspace:*",
     "@chat/ui": "workspace:*",
     "lucide-react": "^0.475.0",
     "next": "^15.2.3",
     "next-themes": "^0.4.4",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-hook-form": "^7.55.0",
+    "zod": "link:@hookform/resolvers/zod"
   },
   "devDependencies": {
+    "@chat/eslint-config": "workspace:^",
+    "@chat/typescript-config": "workspace:*",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@chat/eslint-config": "workspace:^",
-    "@chat/typescript-config": "workspace:*",
     "typescript": "^5.7.3"
   }
 }
