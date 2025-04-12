@@ -1,0 +1,7 @@
+{
+  "extends": "@chat/typescript-config/base.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist"
+  }
+}
