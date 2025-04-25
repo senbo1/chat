@@ -1,20 +1,14 @@
 import express, { Request, Response } from 'express';
 import { createServer } from 'http';
-import { Socket, Server as SocketIOServer } from 'socket.io';
+import { Server as SocketIOServer } from 'socket.io';
+import { Message, ServerToClientEvents, ClientToServerEvents, InterServerEvents, SocketData } from '@chat/shared/types';
 
 import { randomBytes } from 'crypto';
 import { v4 as uuidv4 } from 'uuid';
 
 const app = express();
 const httpServer = createServer(app);
-const io = new SocketIOServer(httpServer);
-
-interface Message {
-  id: string;
-  content: string;
-  senderUsername: string;
-  senderId: string;
-}
+const io = new SocketIOServer<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>(httpServer);
 
 interface Room {
   members: Map<string, string>;
@@ -28,7 +22,7 @@ app.get('/health', (_req: Request, res: Response) => {
 });
 
 // TODO - Create ROOM Manager
-io.on('connection', (socket: Socket) => {
+io.on('connection', (socket) => {
   console.log('a user connected', socket.id);
 
   socket.on('create_room', (username) => {
@@ -86,6 +80,7 @@ io.on('connection', (socket: Socket) => {
       content: content,
       senderUsername: socket.data.username,
       senderId: socket.id,
+      timestamp: new Date(),
     };
 
     room.messages.push(newMessage);
@@ -96,7 +91,7 @@ io.on('connection', (socket: Socket) => {
   socket.on('disconnect', () => {
     console.log('socket disconnected', socket.id);
 
-    // TODO - add socket to rooms map to reduce this
+    // TODO - add sockettorooms map to reduce this
     rooms.forEach((room, roomId) => {
       if (room.members.has(socket.id)) {
         room.members.delete(socket.id);
