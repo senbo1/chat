@@ -3,7 +3,7 @@ export interface Message {
   content: string;
   senderUsername: string;
   senderId: string;
-  timestamp: Date;
+  timestamp: string | Date;
 }
 
 export interface ServerToClientEvents {
