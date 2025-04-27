@@ -81,7 +81,7 @@ io.on('connection', (socket) => {
 
     const room = rooms.get(roomId);
     if (!room) {
-      socket.emit('error', { message: `Room ${roomId} does not exist.` });
+      socket.emit('error', { message: `Room does not exist.` });
       return;
     }
 
@@ -91,8 +91,7 @@ io.on('connection', (socket) => {
     console.log('room messages', room.messages);
     socket.join(roomId);
 
-    socket.emit('room_joined', roomId);
-    socket.emit('messages', room.messages);
+    socket.emit('room_joined', roomId, room.messages);
   });
 
   socket.on('send_message', (content, roomId) => {

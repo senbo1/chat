@@ -8,8 +8,7 @@ export interface Message {
 
 export interface ServerToClientEvents {
   room_created: (roomId: string) => void;
-  room_joined: (roomId: string) => void;
-  messages: (messages: Message[]) => void;
+  room_joined: (roomId: string, messages: Message[]) => void;
   message_received: (message: Message) => void;
   error: (payload: { message: string }) => void;
 }

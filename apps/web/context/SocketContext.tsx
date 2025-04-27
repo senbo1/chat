@@ -71,14 +71,10 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
       router.push(`/room/${roomId}`);
     });
 
-    newSocket.on('room_joined', (roomId) => {
+    newSocket.on('room_joined', (roomId, messages) => {
       setRoomId(roomId);
-      router.push(`/room/${roomId}`);
-    });
-
-    newSocket.on('messages', (messages) => {
       setMessages(messages);
-      console.log(messages);
+      router.push(`/room/${roomId}`);
     });
 
     newSocket.on('message_received', (message) => {
@@ -86,6 +82,7 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
     });
 
     newSocket.on('error', ({ message }) => {
+      console.log(message);
       toast.error(message);
     });
 
